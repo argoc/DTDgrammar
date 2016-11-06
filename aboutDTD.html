@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <!--
+    parseDTD Copyright 2016, Amelia Garripoli
+    http://faculty.olympic.edu/agarripoli
+    Free to use under the MIT license.
+    http://www.opensource.org/licenses/mit-license.php
+    11/6/2016
+       -->
+    <meta charset="utf-8"/>
+    <title>About Check DTD Grammar</title>
+
+    <meta name="description" content="DTD parser since validome.org went down">
+    <meta name="author" content="Amelia Garripoli">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+    <link rel="stylesheet" type="text/css" href="css/dtd.css">
+</head>
+    <body>
+        <div class="container">
+        <div class="row ten columns" style="margin-top: 5%">
+        <h1 id="top">About DTD Grammar</h1>
+
+        <p>We were busy working out DTDs in CIS 205, and when I pulled up the link to validate a DTD grammar, not only did validome.org not come up, but the website I found to find out if it was up or down gave me a drive-by hack. Deep freeze to the rescue!</p>
+        
+        <p>But that didn't solve the larger issue, and 4 days later, validome.org is still down. Php to the rescue! I've built this little parser to validate a DTD grammar. It's incomplete, focussing on the items we need for class.</p>
+        
+        <ol>
+        <li>Things it does not do and may never do:
+        <ul>    <li>Have conditional sections. I didn't even know these were a thing. They are really cool, but beyond the scope of our class.</li>
+            <li>Parse processing instructions intelligently; it allows them anywhere, in any flavor and contents (all it validates is the <? at the start and the ?> at the end). There are rules, and I am not applying them.</li>
+            <li>Allow UTF-8 characters in identifiers and nmtokens. Just ASCII alphabets in identifiers and nmtokens, thank you.</li>
+            <li>References external entities (i.e., pull them in and apply them). This means some parameterized entity references remain in place and may cause syntax errors (if used where more than one token is expected, for example).</li>
+            <li>Detect circular references for parameter entity references. Php will max out its memory and an exception will be triggered, instead.</li>
+            <li>Detect proper use of entity references, character entities, and named entities in string literals.</li>
+            <li>Parse PUBLIC and SYSTEM entity rules. Once it hits the keyword, it fast forwards to the end of the rule.</li>
+            <li>Parse NOTATION rules. Onces it hits the identifier, it fast forwards to the end of the rule.</li>
+            <li>Parse NOTATION attribute types. Onces it hits the identifier, it fast forwards to the end of the rule.</li>
+        </ul></li>
+        
+        <li>Things it does do:
+            <ul><li>ENTITY rules: checks for legal syntax throughout</li>
+            <li>ATTLIST rules: checks for legal syntax throughout</li>
+            <li>Internal Parameterized Entity Reference substitutions in place; it detects these types of ENTITY rules and maintains a table to do substitutions. They must be defined before their first use. </li>
+            <li>Comments are restricted to no -- inside the comment. Now I understand more fully why that's a rule!</li>
+            <li>An attempt at error recovery: if there's an error in a rule, it fast-forwards to the end of the rule and starts again at the next rule.</li>
+            </ul></li>
+            
+        <li>Things I may fix:
+            <ul><li>Whitespace rules are a little more generous than the standard -- there are rules where the standard only allows \x20 and I am allowing all 4 whitespace characters.</li>
+            <li>I am allowing newlines in more places than I should.</li>
+            <li>Because external entities are not pulled in, there is no error when an entity that was not defined is used. This could be addressed with a lookup-without-substitution.</li>
+            <li>I like the idea of a DTD linter -- for example, using keywords like CDATA places other than where they belong; this is detectable, but the standard says when CDATA is used other places, it's just an identifier and is allowed. Not friendly to learners.</li>
+            </ul>
+        </li>
+        </ol>
+
+        <p>If you should run into any issues with this grammar checker, I'd love to hear about it; I've run about 4 sessions of CIS 205 DTDs through it, and several from the web, and used them to fine-tune it to some degree. Contact me with your feedback at agarripoli-theusualsymbol-olympic-theothersymbol-edu. Thank you.</p>
+                             
+        <p>Built with the help of google, w3, php.net, stackoverflow, skeleton (HTML shell with normalize), xampp, and brackets.</p>
+                             
+        <p>This website does not save any input you provide to it in the form. Once it has parsed your data, it is not kept on the server. The web server it runs within may track traffic and monitor use of the server, as it is an Olympic College  resource.</p>
+            </div>
+        <footer><a href="parseDTD.php">Return to DTD Grammar</a></footer>
+        </div>
+    </body>
+</html>
