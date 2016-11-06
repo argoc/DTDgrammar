@@ -1,0 +1,60 @@
+/*
+parseDTD Copyright 2016, Amelia Garripoli
+http://faculty.olympic.edu/agarripoli
+Free to use under the MIT license.
+http://www.opensource.org/licenses/mit-license.php
+11/6/2016
+*/
+/*
+
+styling beyond basic mods to skeleton.css (header sizes)
+
+*/
+
+/* Form styles for field/label placement */
+form button, form input, form label, p>label,p>input {
+    position: inline;
+    float: left;
+    margin-right: 5px;
+}
+
+
+
+
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus,
+form textarea:hover,
+form textarea:focus {
+    background-color:aliceblue;
+}
+
+form textarea {
+    width:80%;
+    height: 15em;
+}
+
+form br, form p {
+    clear: both;
+}
+
+/* body add margins and center 
+body {
+    margin: auto;
+    width: 75%;
+}*/
+
+
+/* code remove background and border */
+code {
+  background: #FFFFFF;
+  border: 0px;
+}
