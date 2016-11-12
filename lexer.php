@@ -213,11 +213,10 @@ class Lexer {
 
             // and try again.
             $token = $this->nextToken();
+        } else {
+            //move to start of next token
+            $this->offset += strlen($token['match']);
         }
-        
-        //move to start of next token
-        $this->offset += strlen($token['match']);
-        
         return $token;
     }
 
