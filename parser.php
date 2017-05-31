@@ -94,7 +94,7 @@ class Parser {
      */
     protected function _matchAtLeastOne($x) {
         $this->_noEof($x);
-	if (!$this->lookahead['token'] == $x) {
+	if ($this->lookahead['token'] != $x) {
 		throw new LogicException("Expecting " .
                         $x . ", found " . 
                         Lexer::tokenerr($this->lookahead));
