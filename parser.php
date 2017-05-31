@@ -609,9 +609,9 @@ class Parser {
                     do {
                         $this->_consume(); // consume the PIPE
                         $this->_matchAny(Lexer::SPACE);
-                        $this->_matchNameOrPeRef();
+                        $this->_matchNameMultiple();
                         $this->_matchAny(Lexer::SPACE);
-                    } while ($this->_expect(Lexer::PIPE)); // another pipe?
+                    } while (! $this->_expect(Lexer::RPAREN)); // another pipe?
                     
                     $this->_match(Lexer::RPAREN);
                     $this->_match(Lexer::MULTIPLE); 
