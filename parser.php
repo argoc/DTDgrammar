@@ -611,10 +611,19 @@ class Parser {
                         $this->_matchAny(Lexer::SPACE);
                         $this->_matchNameOrPeRef();
                         $this->_matchAny(Lexer::SPACE);
-                    } while ($this->_expect(Lexer::PIPE));
+                    } while ($this->_expect(Lexer::PIPE)); // another pipe?
                     
                     $this->_match(Lexer::RPAREN);
-                    $this->_matchStar(); 
+                    $this->_match(Lexer::MULTIPLE); 
+-                   // TODO that MULTIPLE must be a star...
++                   // maybe this $this->_matchStar(); 
+			/*
+-                        $this->_matchNameMultiple();
++                        $this->_matchNameOrPeRef();
+-                    } while (! $this->_expect(Lexer::RPAREN));
++                    } while ($this->_expect(Lexer::PIPE));
+  
+			*/
                 }
                 else {
                     $this->_match(Lexer::RPAREN);
