@@ -88,9 +88,17 @@ class Parser {
         }
     }
 
-    /** Skip lookahead tokens that match type x, consume and leave lookahead on first one past the type */
+    /* 
+       Skip lookahead tokens that match type x, consume and leave lookahead on first one past the type;
+       have to have at least one. 
+     */
     protected function _matchAtLeastOne($x) {
         $this->_noEof($x);
+	if (!$this->lookahead['token'] == $x) {
+		throw new LogicException("Expecting " .
+                        $x . ", found " . 
+                        Lexer::tokenerr($this->lookahead));
+	}
         while ($this->lookahead['token'] == $x ) {
             $this->_consumeNoEof($x);
         }
