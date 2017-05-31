@@ -109,7 +109,7 @@ class Parser {
      */
     protected function _matchStar() {
 	if ($this->_expect(Lexer::MULTIPLE) && 
-		         ($this->lookahead['match'] == '*' ) {
+		         ($this->lookahead['match'] == '*' )) {
             $this->_consume();
 	} else {
             throw new LogicException("Expecting *, found " .
