@@ -103,6 +103,19 @@ class Parser {
             $this->_consumeNoEof($x);
         }
     }
+	
+    /* 
+       Only allow a * of all the multiples... 
+     */
+    protected function _matchStar() {
+	if ($this->_expect(Lexer::MULTIPLE) && 
+		         ($this->lookahead['match'] == '*' ) {
+            $this->_consume();
+	} else {
+            throw new LogicException("Expecting *, found " .
+                        Lexer::tokenerr($this->lookahead));
+	}
+    }
 
     // in some, not all, contexts
     // NAME is followed by an optional ?+* (no spaces between)
@@ -594,15 +607,14 @@ class Parser {
                     // got a pipe, it's pipe name until paren
                     
                     do {
-                        $this->_consume();
+                        $this->_consume(); // consume the PIPE
                         $this->_matchAny(Lexer::SPACE);
-                        $this->_matchNameMultiple();
+                        $this->_matchNameOrPeRef();
                         $this->_matchAny(Lexer::SPACE);
-                    } while (! $this->_expect(Lexer::RPAREN));
+                    } while ($this->_expect(Lexer::PIPE));
                     
                     $this->_match(Lexer::RPAREN);
-                    $this->_match(Lexer::MULTIPLE); 
-                    // TODO that MULTIPLE must be a star...
+                    $this->_matchStar(); 
                 }
                 else {
                     $this->_match(Lexer::RPAREN);
