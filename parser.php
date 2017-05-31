@@ -106,7 +106,7 @@ class Parser {
 	
     /* 
        Only allow a * of all the multiples... 
-     */
+     
     protected function _matchStar() {
 	if ($this->_expect(Lexer::MULTIPLE) && 
 		         ($this->lookahead['match'] == '*' )) {
@@ -115,7 +115,7 @@ class Parser {
             throw new LogicException("Expecting *, found " .
                         Lexer::tokenerr($this->lookahead));
 	}
-    }
+    }*/
 
     // in some, not all, contexts
     // NAME is followed by an optional ?+* (no spaces between)
