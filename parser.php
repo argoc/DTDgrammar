@@ -109,7 +109,7 @@ class Parser {
      */
     protected function _matchStar() {
 	if ($this->_expect(Lexer::MULTIPLE) && 
-		         ($this->lookahead['match'] == '*' ) {
+		         ($this->lookahead['match'] == '*' )) {
             $this->_consume();
 	} else {
             throw new LogicException("Expecting *, found " .
@@ -600,25 +600,24 @@ class Parser {
                 $this->_consume();
                 // bar, space, rparen.
                 $this->_matchAny(Lexer::SPACE);
+		$hadpipe = 0;
                 
                 // pipe means list of elts allowed...
                 // repeat until RPARENSTAR
-                if ($this->_expect(Lexer::PIPE)) {
+                while ($this->_expect(Lexer::PIPE)) {
+		    $hadpipe = 1;
                     // got a pipe, it's pipe name until paren
-                    
-                    do {
-                        $this->_consume(); // consume the PIPE
-                        $this->_matchAny(Lexer::SPACE);
-                        $this->_matchNameOrPeRef();
-                        $this->_matchAny(Lexer::SPACE);
-                    } while ($this->_expect(Lexer::PIPE));
-                    
-                    $this->_match(Lexer::RPAREN);
+                    $this->_consume(); // consume the PIPE
+                    $this->_matchAny(Lexer::SPACE);
+                    $this->_matchNameOrPeRef();
+                    $this->_matchAny(Lexer::SPACE);
+                }
+
+                $this->_match(Lexer::RPAREN);
+		// if you had a pipe, MUST have a star, otherwise it's optional
+		if ($hadpipe == 1 || $this->_expact(Lexer::MULTIPLE)) { // better be a star...
                     $this->_matchStar(); 
-                }
-                else {
-                    $this->_match(Lexer::RPAREN);
-                }
+		}
                 return;
                 break;
 
