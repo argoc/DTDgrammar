@@ -600,12 +600,12 @@ class Parser {
                 $this->_consume();
                 // bar, space, rparen.
                 $this->_matchAny(Lexer::SPACE);
-		$hadpipe = 0;
+		$hadpipe=false;
                 
                 // pipe means list of elts allowed...
                 // repeat until RPARENSTAR
                 while ($this->_expect(Lexer::PIPE)) {
-		    $hadpipe = 1;
+		    $hadpipe=true;
                     // got a pipe, it's pipe name until paren
                     $this->_consume(); // consume the PIPE
                     $this->_matchAny(Lexer::SPACE);
@@ -615,7 +615,7 @@ class Parser {
 
                 $this->_match(Lexer::RPAREN);
 		// if you had a pipe, MUST have a star, otherwise it's optional
-		if ($hadpipe == 1 || $this->_expact(Lexer::MULTIPLE)) { // better be a star...
+		if ($hadpipe || $this->_expect(Lexer::MULTIPLE)) { // better be a star...
                     $this->_matchStar(); 
 		}
                 return;
